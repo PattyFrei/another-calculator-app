@@ -1,1 +1,14 @@
-/* You can add global styles to this file, and also import other style files */
+$background-color: #15143d;
+$text-color: #292929;
+
+html {
+    margin: 0;
+    padding: 0;
+    body {
+        margin: 2em;
+        padding: 0;
+        background-color: $background-color;
+        color: $text-color;
+        font-family: "Roboto", "Helvetica Neue", sans-serif;
+    }
+}
