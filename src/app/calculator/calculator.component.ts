@@ -10,7 +10,6 @@ export class CalculatorComponent implements OnInit {
     secondOperand: number | undefined;
     operator: string | undefined;
     result: number | undefined;
-    calculation: string | undefined;
     note: string | undefined;
 
     get hasFirstOperand(): boolean {
@@ -87,12 +86,14 @@ export class CalculatorComponent implements OnInit {
     }
 
     setOperator(operator: string): void {
-        if (this.hasResult || this.note) {
+        if (this.hasResult) {
             const newOperand = this.result;
             const newOperator = operator;
             this.clearAll();
             this.firstOperand = newOperand;
             this.operator = newOperator;
+        } else if (this.note) {
+            return;
         } else {
             this.operator = operator;
         }
