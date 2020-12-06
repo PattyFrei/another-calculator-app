@@ -1,8 +1,6 @@
 <div class="display">
-    <!-- <span *ngIf="hasFirstOperand">{{ firstOperand }}&nbsp;</span> -->
     <span *ngIf="this.firstOperand.length">{{ parseFirstOperand }}&nbsp;</span>
     <span *ngIf="operator">{{ operator }}&nbsp;</span>
-    <!-- <span *ngIf="hasSecondOperand">{{ secondOperand }}&nbsp;</span> -->
     <span *ngIf="this.secondOperand.length">{{ parseSecondOperand }}&nbsp;</span>
     <span *ngIf="hasResult">=&nbsp;{{ result }}</span>
     <span *ngIf="note">=&nbsp;{{ note }}</span>
