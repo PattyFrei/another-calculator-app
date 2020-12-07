@@ -59,10 +59,10 @@ export class CalculatorComponent implements OnInit {
                 case '-':
                     this.result = this.parseFirstOperand - this.parseSecondOperand;
                     break;
-                case '*':
+                case '×':
                     this.result = this.parseFirstOperand * this.parseSecondOperand;
                     break;
-                case '/':
+                case '÷':
                     this.parseSecondOperand === 0
                         ? (this.note = 'Cannot divide by zero')
                         : (this.result = Number((this.parseFirstOperand / this.parseSecondOperand).toFixed(2)));

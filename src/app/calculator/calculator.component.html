@@ -5,22 +5,25 @@
     <span *ngIf="hasResult">=&nbsp;{{ result }}</span>
     <span *ngIf="note">=&nbsp;{{ note }}</span>
 </div>
-<div class="card-container">
-    <div class="card" (click)="clear()">C</div>
-    <div class="card" (click)="clearAll()">AC</div>
-    <div class="card" (click)="setOperand(9)">9</div>
-    <div class="card" (click)="setOperand(8)">8</div>
-    <div class="card" (click)="setOperand(7)">7</div>
-    <div class="card" (click)="setOperand(6)">6</div>
-    <div class="card" (click)="setOperand(5)">5</div>
-    <div class="card" (click)="setOperand(4)">4</div>
-    <div class="card" (click)="setOperand(3)">3</div>
-    <div class="card" (click)="setOperand(2)">2</div>
-    <div class="card" (click)="setOperand(1)">1</div>
-    <div class="card" (click)="setOperand(0)">0</div>
-    <div class="card" (click)="setOperator('+')">+</div>
-    <div class="card" (click)="setOperator('-')">-</div>
-    <div class="card" (click)="setOperator('*')">*</div>
-    <div class="card" (click)="setOperator('/')">/</div>
-    <div class="card" (click)="evaluate()">=</div>
+<div class="container">
+    <div class="button button-clear" (click)="clear()">C</div>
+    <div class="button button-clear" (click)="clearAll()">AC</div>
+    <div class="button button-operator"></div>
+    <div class="button button-operator" (click)="setOperator('÷')">÷</div>
+    <div class="button button-number" (click)="setOperand(7)">7</div>
+    <div class="button button-number" (click)="setOperand(8)">8</div>
+    <div class="button button-number" (click)="setOperand(9)">9</div>
+    <div class="button button-operator" (click)="setOperator('×')">×</div>
+    <div class="button button-number" (click)="setOperand(4)">4</div>
+    <div class="button button-number" (click)="setOperand(5)">5</div>
+    <div class="button button-number" (click)="setOperand(6)">6</div>
+    <div class="button button-operator" (click)="setOperator('-')">-</div>
+    <div class="button button-number" (click)="setOperand(1)">1</div>
+    <div class="button button-number" (click)="setOperand(2)">2</div>
+    <div class="button button-number" (click)="setOperand(3)">3</div>
+    <div class="button button-operator" (click)="setOperator('+')">+</div>
+    <div class="button button-number">±</div>
+    <div class="button button-number" (click)="setOperand(0)">0</div>
+    <div class="button button-number">,</div>
+    <div class="button button-evaluator" (click)="evaluate()">=</div>
 </div>
