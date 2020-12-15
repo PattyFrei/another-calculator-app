@@ -6,31 +6,34 @@ import { Component, OnInit } from '@angular/core';
     styleUrls: ['./calculator.component.scss'],
 })
 export class CalculatorComponent implements OnInit {
+    firstOperandInput = '';
+    firstOperand: number | undefined;
+    secondOperandInput = '';
+    secondOperand: number | undefined;
     operator: string | undefined;
     result: number | undefined;
     note: string | undefined;
-    firstOperand: number[] = [];
-    secondOperand: number[] = [];
 
     get hasResult(): boolean {
         return this.result !== undefined;
-    }
-
-    get parseFirstOperand(): number {
-        return parseInt(this.firstOperand.join(''), 10);
-    }
-
-    get parseSecondOperand(): number {
-        return parseInt(this.secondOperand.join(''), 10);
     }
 
     constructor() {}
 
     ngOnInit(): void {}
 
+    setFirstOperand(input: string): void {
+        this.firstOperand = parseInt(input, 10);
+    }
+
+    setSecondOperand(input: string): void {
+        this.secondOperand = parseInt(input, 10);
+    }
+
     clear(): void {
-        if (this.secondOperand.length) {
-            this.secondOperand = [];
+        if (this.secondOperand !== undefined) {
+            this.secondOperand = undefined;
+            this.secondOperandInput = '';
             this.result = undefined;
             this.note = undefined;
         } else if (this.operator !== undefined) {
@@ -38,7 +41,8 @@ export class CalculatorComponent implements OnInit {
             this.result = undefined;
             this.note = undefined;
         } else {
-            this.firstOperand = [];
+            this.firstOperand = undefined;
+            this.firstOperandInput = '';
             this.operator = undefined;
             this.result = undefined;
             this.note = undefined;
@@ -49,39 +53,57 @@ export class CalculatorComponent implements OnInit {
         this.operator = undefined;
         this.result = undefined;
         this.note = undefined;
-        this.firstOperand = [];
-        this.secondOperand = [];
+        this.secondOperand = undefined;
+        this.secondOperandInput = '';
+        this.firstOperand = undefined;
+        this.firstOperandInput = '';
+    }
+
+    clearOperation(): void {
+        this.operator = undefined;
+        this.result = undefined;
+        this.secondOperand = undefined;
+        this.secondOperandInput = '';
+        this.firstOperand = undefined;
+        this.firstOperandInput = '';
     }
 
     evaluate(): void {
-        if (this.firstOperand.length && this.secondOperand.length) {
+        if (this.firstOperand !== undefined && this.secondOperand !== undefined) {
             switch (this.operator) {
                 case '-':
-                    this.result = this.parseFirstOperand - this.parseSecondOperand;
+                    this.result = this.firstOperand - this.secondOperand;
                     break;
                 case '×':
-                    this.result = this.parseFirstOperand * this.parseSecondOperand;
+                    this.result = this.firstOperand * this.secondOperand;
                     break;
                 case '÷':
-                    this.parseSecondOperand === 0
-                        ? (this.note = 'Cannot divide by zero')
-                        : (this.result = Number((this.parseFirstOperand / this.parseSecondOperand).toFixed(2)));
+                    if (this.secondOperand === 0) {
+                        this.note = 'Cannot divide by zero';
+                        this.clearOperation();
+                    } else this.result = Number((this.firstOperand / this.secondOperand).toFixed(2));
                     break;
                 default:
-                    this.result = this.parseFirstOperand + this.parseSecondOperand;
+                    this.result = this.firstOperand + this.secondOperand;
                     break;
             }
         }
     }
 
-    setOperand(operand: number): void {
-        if (this.hasResult || this.note) {
+    setOperand(operand: string): void {
+        if (this.note) {
             this.clearAll();
-            this.firstOperand.push(operand);
+            this.setFirstOperand(operand);
+        } else if (this.hasResult) {
+            this.clearAll();
+            this.result = undefined;
+            this.setFirstOperand(operand);
         } else if (this.operator !== undefined) {
-            this.secondOperand.push(operand);
-        } else {
-            this.firstOperand.push(operand);
+            this.secondOperandInput = this.secondOperandInput.concat(operand);
+            this.setSecondOperand(this.secondOperandInput);
+        } else if (this.operator === undefined) {
+            this.firstOperandInput = this.firstOperandInput.concat(operand);
+            this.setFirstOperand(this.firstOperandInput);
         }
     }
 
@@ -90,15 +112,20 @@ export class CalculatorComponent implements OnInit {
             const newOperand = this.result;
             const newOperator = operator;
             this.clearAll();
-            // TO DO: preserve decimal
-            console.log(newOperand);
-            this.firstOperand.push(Number(newOperand));
-            console.log(this.parseFirstOperand);
+            this.firstOperand = newOperand;
             this.operator = newOperator;
         } else if (this.note) {
-            return;
-        } else {
-            this.operator = operator;
+            this.clearAll();
+        } else this.operator = operator;
+    }
+
+    invertOperand(): void {
+        if (this.result !== undefined) {
+            this.result = this.result * -1;
+        } else if (this.secondOperand !== undefined) {
+            this.secondOperand = this.secondOperand * -1;
+        } else if (this.firstOperand !== undefined) {
+            this.firstOperand = this.firstOperand * -1;
         }
     }
 }
